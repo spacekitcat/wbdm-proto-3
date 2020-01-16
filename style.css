@@ -1,0 +1,26 @@
+body {
+  background-color: red;
+  font-size: 14px;
+  font-family: sans-serif;
+}
+
+.content {
+  background-color: white;
+  width: 100%;
+}
+
+.samples li {
+  display: inline-block;
+  padding:8px;
+  list-style: none;
+  vertical-align: middle;
+  width: 125px;
+}
+
+.highlight {
+  background: yellow;
+}
+
+.title {
+  color: white;
+}

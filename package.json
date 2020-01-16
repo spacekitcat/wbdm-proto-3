@@ -1,0 +1,11 @@
+{
+  "name": "wbdm-proto-3",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Lisa Burton",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "jsonfile": "^5.0.0"
+  }
+}
