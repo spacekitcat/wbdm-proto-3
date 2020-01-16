@@ -1,5 +1,7 @@
 # WBDM Prototype 3
 
+DEMO: http://static.spacekitcat.com/wbdm3/webapp/index.html
+
 Previous prototypes show React based sample play back apps with crappy timing, mostly focused on the ui state.
 
 This project sets out to show the following.
@@ -8,7 +10,7 @@ This project sets out to show the following.
   - Web Audio clock
   - lookahead strategy ([ala, A Tale of Two Clocks](https://www.html5rocks.com/en/tutorials/audio/scheduling/))
 
-The code and the UI are really crappy, but the timing seems right. It uses the Web Audio clock to schedule when
+The code and the UI are really crappy, but the timing is pretty good. It uses the Web Audio clock to schedule when
 notes get played and a straightforward interval call to periodically cue samples for playback. You don't want to
 just cue all of your notes for playback at once because you'll have a hard time adjusting the sequence of samples
 (I'm building a drum machine remember) or keep track of what's playing easily.
@@ -22,7 +24,7 @@ You need to add `localhost.spacekitcat.com` to you hosts file
 127.0.0.1 localhost.spacekitcat.com
 ```
 
-and then run the code in a web server
+and then serve the code from a webserver
 
 ```bash
 npm install http-server -g
