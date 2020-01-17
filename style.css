@@ -6,7 +6,9 @@ body {
 
 .content {
   background-color: white;
+  height: 250px;
   width: 100%;
+  position: relative;
 }
 
 .samples li {
@@ -22,5 +24,25 @@ body {
 }
 
 .title {
+  color: white;
+}
+
+.loading-view {
+  background-image: url('Testcard_F.jpg');
+  color: yellow;
+  position:absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.play {
+  padding: 8px 24px;
+  border-style: none;
+  margin-left: 64px;
+}
+
+.play:active {
+  background-color: red;
   color: white;
 }

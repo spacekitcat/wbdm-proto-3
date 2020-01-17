@@ -1,38 +1,8 @@
 window.addEventListener('load', init, false);
 
-const fetchManifest = () =>
-  window
-    .fetch(`http://static.spacekitcat.com/wbdm3/config/manifest.json`, {
-      cache: 'force-cache',
-      cache: 'reload'
-    })
-    .then(response => response.json());
+ReactDOM.render(<Page />, document.getElementById('root'));
 
-const decodeResponseBuffer = audioData =>
-  audioContext.decodeAudioData(audioData);
-
-const fetchAndCacheSample = sampleName =>
-  window
-    .fetch(`http://static.spacekitcat.com/wbdm3/samples/${sampleName}`, {
-      cache: 'force-cache'
-    })
-    .then(response => response.arrayBuffer())
-    .then(decodeResponseBuffer);
-
-const loadSamples = manifestJson =>
-  Promise.all(
-    manifestJson.samples.map(async item => {
-      let audioData = await fetchAndCacheSample(item.file);
-      return { audioData: audioData, metaData: item };
-    })
-  );
-
-const playSample = (sampleData, time) => {
-  const bufferSource = audioContext.createBufferSource();
-  bufferSource.buffer = sampleData;
-  bufferSource.connect(audioContext.destination);
-  bufferSource.start(time);
-};
+let audioContext;
 
 const bpm = 180;
 const timeSeconds = 60;
@@ -46,19 +16,15 @@ function init() {
   try {
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     audioContext = new AudioContext();
-
-    fetchManifest().then(manifestJson => {
-      loadSamples(manifestJson).then(samples => {
-        audioSampleDataCache = samples;
-      });
-    });
   } catch (e) {
     alert('Web Audio API is not supported on your browser: ' + e);
   }
 }
 
 let playing = false;
-const playForMe = () => {
+var playForMe = () => {
+  console.log('Got play command');
+
   if (playing) {
     console.log('Already playing');
     return;
@@ -123,13 +89,16 @@ const playForMe = () => {
           document.getElementById('#sample-name').append(li);
         });
 
-      playSample(barCue.pop().audioData, playTime);
-      playSample(barCue.pop().audioData, playTime + calculateNoteInterval());
+      playSample(audioContext, barCue.pop().audioData, playTime);
       playSample(
+        audioContext, barCue.pop().audioData,
+        playTime + calculateNoteInterval()
+      );
+      playSample(audioContext,
         barCue.pop().audioData,
         playTime + calculateNoteInterval() * 2
       );
-      playSample(
+      playSample(audioContext,
         barCue.pop().audioData,
         playTime + calculateNoteInterval() * 3
       );

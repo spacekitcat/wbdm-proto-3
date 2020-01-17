@@ -2,16 +2,18 @@
   <head>
     <title>WBDM prototype three</title>
     <meta charset="utf-8">
-    <script type="text/javascript" src="script.js">
-    </script>
     <link rel="stylesheet" href="./style.css"></link>
   </head>
   <body>
-    <h1 class="title">Do you like... drums?</h1>
-    <input id="#play" type="button" class="play" onclick="playForMe()" value="play"></input>
-    <div class="content">
-      <ul id="#sample-name" class="samples">
-      </ul>
+    <div id="root">
     </div>
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel" src="manifest-loader.js"></script>
+    <script type="text/babel" src="sample-loader.js"></script>
+    <script type="text/babel" src="sample-player.js"></script>
+    <script type="text/babel" src="page.jsx"></script>
+    <script type="text/babel" src="script.js"></script>
   </body>
 </html>
