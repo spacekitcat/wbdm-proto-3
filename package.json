@@ -6,6 +6,10 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "http-server": "^0.12.1",
     "jsonfile": "^5.0.0"
+  },
+  "scripts": {
+    "start": "http-server"
   }
 }

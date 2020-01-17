@@ -1,25 +1,25 @@
-const decodeResponseBuffer = audioData =>
+const decodeResponseBuffer = audioContext => audioData =>
   audioContext.decodeAudioData(audioData);
 
-const fetchAndCacheSample = sampleName =>
+const fetchAndCacheSample = (audioContext, sampleName) =>
   window
     .fetch(`http://static.spacekitcat.com/wbdm3/samples/${sampleName}`, {
       cache: 'force-cache'
     })
     .then(response => response.arrayBuffer())
-    .then(decodeResponseBuffer);
+    .then(decodeResponseBuffer(audioContext));
 
-const loadSamples = manifestJson =>
+const loadSamples = (audioContext, manifestJson) =>
   Promise.all(
     manifestJson.samples.map(async item => {
-      let audioData = await fetchAndCacheSample(item.file);
+      let audioData = await fetchAndCacheSample(audioContext, item.file);
       return { audioData: audioData, metaData: item };
     })
   );
 
 let audioSampleDataCache = [];
-const initSampleCache = manifestJson => {
-  loadSamples(manifestJson).then(samples => {
+const initSampleCache = audioContext => manifestJson => {
+  return loadSamples(audioContext, manifestJson).then(samples => {
     audioSampleDataCache = samples;
     console.log(`Loaded ${audioSampleDataCache.length} into the sample cache`);
   });

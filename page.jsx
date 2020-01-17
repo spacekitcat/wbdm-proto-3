@@ -2,9 +2,8 @@ class Page extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { isLoaded: false };
+    this.state = { isLoaded: false, playbackQueue: [] };
     this.playDrumsEventHandler = this.playDrumsEventHandler.bind(this);
-    this.initWebAudio();
   }
 
   initWebAudio() {
@@ -22,10 +21,17 @@ class Page extends React.Component {
     let when = this.audioContext.currentTime + 1;
     console.log(when);
     playSample(this.audioContext, sample.audioData, when);
+    //playbackQueue.push({ sample, when })
   }
 
   componentDidMount() {
-    fetchManifest().then(initSampleCache).then(() => { this.setState({ isLoaded: true })});
+    this.initWebAudio();
+
+    fetchManifest()
+      .then(initSampleCache(this.audioContext))
+      .then(() => {
+        this.setState({ isLoaded: true });
+      });
   }
 
   render() {
@@ -33,8 +39,8 @@ class Page extends React.Component {
 
     return (
       <div className="content">
-        {isLoaded ?
-          (<div className="drum-view">
+        {isLoaded ? (
+          <div className="drum-view">
             <h1 className="title">Do you like... drums?</h1>
             <input
               id="#play"
@@ -45,8 +51,13 @@ class Page extends React.Component {
             <div className="samples-container">
               <ul id="#sample-name" className="samples"></ul>
             </div>
-          </div>) : (<div className="loading-view"><h1>Loading...</h1></div>)
-        }
-      </div>);
+          </div>
+        ) : (
+          <div className="loading-view">
+            <h1>Loading...</h1>
+          </div>
+        )}
+      </div>
+    );
   }
 }
