@@ -7,7 +7,9 @@ body {
 .content {
   background-color: white;
   height: 250px;
-  width: 100%;
+  margin-left: 32px;
+  margin-right: 32px;
+
   position: relative;
 }
 
@@ -39,10 +41,13 @@ body {
 .play {
   padding: 8px 24px;
   border-style: none;
-  margin-left: 64px;
 }
 
 .play:active {
   background-color: red;
   color: white;
+}
+
+.sample {
+  height: 32px;
 }
