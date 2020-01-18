@@ -6,11 +6,17 @@ body {
 
 .content {
   background-color: white;
-  height: 250px;
-  margin-left: 32px;
-  margin-right: 32px;
-
+  height: 500px;
+  max-width: 1280px;
+  /* margin-left: 32px;
+  margin-right: 32px; */
+  margin: auto;
   position: relative;
+}
+
+.drum-view {
+  text-align: center;
+  height: 100%;
 }
 
 .samples li {
@@ -29,13 +35,27 @@ body {
   color: white;
 }
 
+@keyframes loading {
+  from {
+    background-size: 10%;
+  }
+  to {
+    background-size: 20%;
+
+  }
+}
+
 .loading-view {
+  animation: 1s loading 0s infinite alternate;
   background-image: url('Testcard_F.jpg');
-  color: yellow;
+  color: greenyellow;
   position:absolute;
   top: 0;
   bottom: 0;
   width: 100%;
+  font-size: 72px;
+  margin:auto;
+  text-align: center;
 }
 
 .play {
@@ -48,6 +68,22 @@ body {
   color: white;
 }
 
+@keyframes slidein {
+  from {
+    transform: rotate3d(0, 1, 0, -45deg) translateY(25px);
+  }
+  to {
+    transform: rotateX(0, 1, 0, 45deg) translateY(-25px);
+
+  }
+}
+
 .sample {
+  animation: 1s slidein 0s infinite alternate;
+  position: fixed;
+  font-size: 72px;
+  left: -50%;
+  right: -50%;
+  top: 100px;
   height: 32px;
 }

@@ -2,11 +2,16 @@ class Page extends React.Component {
   constructor(props) {
     super(props);
 
-    this.bpm = 120;
+    this.bpm = 140;
     this.timeSeconds = 60;
-    this.quarterNotesPerBar = 4;
+    this.quarterNotesPerBar = 1;
 
-    this.state = { isLoaded: false, playbackQueue: [], current: '', currentSample: null };
+    this.state = {
+      isLoaded: false,
+      playbackQueue: [],
+      current: '',
+      currentSample: null
+    };
     this.playDrumsEventHandler = this.playDrumsEventHandler.bind(this);
     this.timeoutHandler = this.timeoutHandler.bind(this);
   }
@@ -28,41 +33,25 @@ class Page extends React.Component {
     }
   }
 
+  schedule(start, note) {
+    const { playbackQueue } = this.state;
+    let sample = selectRandomSample();
+    let when =
+      start + note * this.quarterNotesPerBar * this.calculateNoteInterval();
+
+    playSample(this.audioContext, sample.audioData, when);
+    playbackQueue.push({ sample, when });
+    this.setState({ playbackQueue });
+  }
+
   playDrumsEventHandler() {
     const { playbackQueue } = this.state;
 
     console.log('bang your drum!');
-    let sample = selectRandomSample();
-    let sample2 = selectRandomSample();
-    let sample3 = selectRandomSample();
-    let sample4 = selectRandomSample();
-    let when = this.audioContext.currentTime + (1 * this.quarterNotesPerBar * this.calculateNoteInterval());
-    console.log(when);
-    playSample(this.audioContext, sample.audioData, when);
-    playSample(
-      this.audioContext,
-      sample2.audioData,
-      when + this.calculateNoteInterval()
-    );
-    playSample(
-      this.audioContext,
-      sample3.audioData,
-      when + 2 * this.calculateNoteInterval()
-    );
-
-    playSample(
-      this.audioContext,
-      sample4.audioData,
-      when + 3 * this.calculateNoteInterval()
-    );
-    playbackQueue.push({ sample, when });
-    playbackQueue.push({ sample: sample2, when: when + this.calculateNoteInterval() });
-    playbackQueue.push({ sample: sample3, when: when + 2 * this.calculateNoteInterval() });
-    playbackQueue.push({
-      sample: sample4,
-      when: when + 3 * this.calculateNoteInterval()
-    });
-    this.setState({ playbackQueue });
+    let start = this.audioContext.currentTime;
+    for (let i = 0; i < 18; ++i) {
+      this.schedule(start, i);
+    }
   }
 
   timeoutHandler() {
@@ -85,7 +74,7 @@ class Page extends React.Component {
     }
 
     if (playbackQueue.length === 0) {
-      this.setState({current: null})
+      this.setState({ current: null });
     }
   }
 
@@ -125,7 +114,7 @@ class Page extends React.Component {
           </div>
         ) : (
           <div className="loading-view">
-            <h1>Loading...</h1>
+            <h1>LOADING</h1>
           </div>
         )}
       </div>
