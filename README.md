@@ -10,10 +10,8 @@ This project sets out to show the following.
   - Web Audio clock
   - lookahead strategy ([ala, A Tale of Two Clocks](https://www.html5rocks.com/en/tutorials/audio/scheduling/))
 
-The code and the UI are really crappy, but the timing is pretty good. It uses the Web Audio clock to schedule when
-notes get played and a straightforward interval call to periodically cue samples for playback. You don't want to
-just cue all of your notes for playback at once because you'll have a hard time adjusting the sequence of samples
-(I'm building a drum machine remember) or keep track of what's playing easily.
+The code and the UI are really crappy, but the timing is pretty good. It uses the Web Audio clock to schedule sample playback
+when the action button is pressed. It independently keeps track of the scheduled sample playback requests, and outputs the sample name scheduled to play next. It also uses React to render the app and manage the App life cycle.
 
 
 ## Running
