@@ -1,7 +1,9 @@
 body {
-  background-color: red;
+  background-color: rgb(255, 153, 57);
+  color: rgba(255, 153, 57);
   font-size: 14px;
-  font-family: sans-serif;
+  font-family: 'Press Start 2P', cursive;
+  margin: 0;
 }
 
 .content {
@@ -11,6 +13,7 @@ body {
   /* margin-left: 32px;
   margin-right: 32px; */
   margin: auto;
+  margin-top: 0;
   position: relative;
 }
 
@@ -21,7 +24,7 @@ body {
 
 .samples li {
   display: inline-block;
-  padding:8px;
+  padding: 8px;
   list-style: none;
   vertical-align: middle;
   width: 125px;
@@ -37,30 +40,37 @@ body {
 
 @keyframes loading {
   from {
-    background-size: 10%;
+    width: 0%;
+    font-size: 4px;
+    color: rgba(255, 153, 57, 0);
   }
   to {
-    background-size: 20%;
-
+    width: 100%;
+    font-size: 72px;
+    color: rgba(255, 153, 57);
   }
 }
 
 .loading-view {
-  animation: 1s loading 0s infinite alternate;
-  background-image: url('Testcard_F.jpg');
-  color: greenyellow;
-  position:absolute;
+  animation: 2s loading 0s infinite alternate;
+  background-color: rgb(255, 153, 57);
+  color: rgb(255, 153, 57);
+
+  position: absolute;
   top: 0;
   bottom: 0;
   width: 100%;
-  font-size: 72px;
-  margin:auto;
+  margin: auto;
   text-align: center;
+  height: 22px;
 }
 
 .play {
   padding: 8px 24px;
   border-style: none;
+  background-color: rgb(0, 110, 255);
+  color: white;
+  font-family: 'Press Start 2P', cursive;
 }
 
 .play:active {
@@ -68,18 +78,7 @@ body {
   color: white;
 }
 
-@keyframes slidein {
-  from {
-    transform: rotate3d(0, 1, 0, -45deg) translateY(25px);
-  }
-  to {
-    transform: rotateX(0, 1, 0, 45deg) translateY(-25px);
-
-  }
-}
-
 .sample {
-  animation: 1s slidein 0s infinite alternate;
   position: fixed;
   font-size: 72px;
   left: -50%;

@@ -37,7 +37,7 @@ class Page extends React.Component {
     const { playbackQueue } = this.state;
     let sample = selectRandomSample();
     const alreadyPlayedInterval = note * this.calculateNoteInterval();
-    let when = start + alreadyPlayedInterval;
+    let when = start + alreadyPlayedInterval; 
 
     playSample(this.audioContext, sample.audioData, when);
     playbackQueue.push({ sample, when });
@@ -54,15 +54,19 @@ class Page extends React.Component {
     }
   }
 
+  purgeExpiredPlaybackRequests() {
+    const { playbackQueue } = this.state;
+    while (playbackQueue.length > 0 && playbackQueue[0].when < this.audioContext.currentTime) {
+      playbackQueue.shift();
+    }
+  }
+
   timeoutHandler() {
     const { playbackQueue } = this.state;
 
+    this.purgeExpiredPlaybackRequests();
+
     if (
-      playbackQueue.length > 0 &&
-      playbackQueue[0].when <= this.audioContext.currentTime
-    ) {
-      const current = playbackQueue.shift();
-    } else if (
       playbackQueue.length > 0 &&
       playbackQueue[0].when > this.audioContext.currentTime
     ) {
@@ -107,7 +111,7 @@ class Page extends React.Component {
               type="button"
               className="play"
               onClick={this.playDrumsEventHandler}
-              value="play"></input>
+              value="PLAY"></input>
             <div className="samples-container">
               <ul id="#sample-name" className="samples"></ul>
             </div>
