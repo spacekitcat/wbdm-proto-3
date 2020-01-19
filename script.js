@@ -1,1 +1,1 @@
-ReactDOM.render(<Page />, document.getElementById('root'));
+ReactDOM.render(<Page bpm={180} />, document.getElementById('root'));

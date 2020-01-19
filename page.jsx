@@ -2,7 +2,6 @@ class Page extends React.Component {
   constructor(props) {
     super(props);
 
-    this.bpm = 140;
     this.timeSeconds = 60;
     this.quarterNotesPerBar = 1;
 
@@ -17,7 +16,8 @@ class Page extends React.Component {
   }
 
   calculateNoteInterval() {
-    return this.timeSeconds / this.bpm;
+    const { bpm } = this.props;
+    return this.timeSeconds / bpm;
   }
 
   calculateBarLength() {
@@ -36,8 +36,8 @@ class Page extends React.Component {
   schedule(start, note) {
     const { playbackQueue } = this.state;
     let sample = selectRandomSample();
-    let when =
-      start + note * this.quarterNotesPerBar * this.calculateNoteInterval();
+    const alreadyPlayedInterval = note * this.calculateNoteInterval();
+    let when = start + alreadyPlayedInterval;
 
     playSample(this.audioContext, sample.audioData, when);
     playbackQueue.push({ sample, when });
