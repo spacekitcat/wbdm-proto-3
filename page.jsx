@@ -5,7 +5,8 @@ class Page extends React.Component {
     this.state = {
       isLoaded: false,
       playbackQueue: [],
-      current: ''
+      current: '',
+      volume: 0
     };
 
     this.playDrumsEventHandler = this.playDrumsEventHandler.bind(this);
@@ -21,6 +22,8 @@ class Page extends React.Component {
     try {
       window.AudioContext = window.AudioContext || window.webkitAudioContext;
       this.audioContext = new AudioContext();
+      this.analyser = this.audioContext.createAnalyser();
+      this.analyser.fftSize = 256;
     } catch (e) {
       alert('Web Audio API is not supported on your browser: ' + e);
     }
@@ -32,7 +35,7 @@ class Page extends React.Component {
     const alreadyPlayedInterval = note * this.calculateNoteInterval();
     let when = start + alreadyPlayedInterval;
 
-    playSample(this.audioContext, sample.audioData, when);
+    playSample(this.audioContext, this.analyser, sample.audioData, when);
     playbackQueue.push({ sample, when });
     this.setState({ playbackQueue });
   }
@@ -63,22 +66,30 @@ class Page extends React.Component {
 
   collectPlaybackQueueGarbage() {
     const { playbackQueue } = this.state;
-    while (this.playbackQueueHeadExpired()) this.playbackQueuePop();
+    if (playbackQueue.length === 0) {
+    }
+
+      while (this.playbackQueueHeadExpired()) this.playbackQueuePop();
   }
 
   timeoutHandler() {
-    const { playbackQueue } = this.state;
+    const { playbackQueue, volume } = this.state;
 
     this.collectPlaybackQueueGarbage();
 
+    let current = null;
     if (playbackQueue.length > 0) {
-      const current = playbackQueue[0];
-      const sample = current.sample;
-      this.setState({
-        current: sample.metaData.file
-      });
-    } else {
-      this.setState({ current: null });
+      const c = playbackQueue[0];
+      const sample = c.sample;
+      current = sample.metaData.file;
+    }
+
+    let dataArray = new Float32Array(this.analyser.frequencyBinCount);
+    void this.analyser.getFloatTimeDomainData(dataArray); 
+    const newVolume = dataArray.reduce((sum, i) => sum + i) / dataArray.length;
+
+    if (newVolume !== volume) {
+      this.setState({ volume: newVolume, current });
     }
   }
 
@@ -91,14 +102,14 @@ class Page extends React.Component {
         this.setState({ isLoaded: true });
       })
       .then(() => {
-        window.setInterval(this.timeoutHandler, 200);
+        window.setInterval(this.timeoutHandler, 100);
       });
   }
 
   componentWillUpdate() {}
 
   render() {
-    const { isLoaded, current, playbackQueue } = this.state;
+    const { isLoaded, current, playbackQueue, volume } = this.state;
 
     return (
       <div className="content">
@@ -116,6 +127,7 @@ class Page extends React.Component {
             <div className="samples-container">
               <ul id="#sample-name" className="samples"></ul>
             </div>
+            <div className="volume">VOLUME: {Math.round(Math.abs(volume) * 120)}</div>
           </div>
         ) : (
           <div className="loading-view">
