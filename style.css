@@ -80,6 +80,11 @@ body {
   color: white;
 }
 
+.volume-on {
+  font-size: 16px;
+  color: red;
+}
+
 .sample {
   font-size: 32px;
   position: fixed;

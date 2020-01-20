@@ -110,6 +110,7 @@ class Page extends React.Component {
 
   render() {
     const { isLoaded, current, playbackQueue, volume } = this.state;
+    const vol = Math.round(Math.abs(volume) * 120);
 
     return (
       <div className="content">
@@ -127,7 +128,7 @@ class Page extends React.Component {
             <div className="samples-container">
               <ul id="#sample-name" className="samples"></ul>
             </div>
-            <div className="volume">VOLUME: {Math.round(Math.abs(volume) * 120)}</div>
+            <div className={`volume ${vol > 0 ? 'volume-on' : ''}`}>{vol} (Volume)</div>
           </div>
         ) : (
           <div className="loading-view">
