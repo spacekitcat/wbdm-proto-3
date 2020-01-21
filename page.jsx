@@ -23,7 +23,7 @@ class Page extends React.Component {
       window.AudioContext = window.AudioContext || window.webkitAudioContext;
       this.audioContext = new AudioContext();
       this.analyser = this.audioContext.createAnalyser();
-      this.analyser.fftSize = 256;
+      this.analyser.fftSize = 32;
     } catch (e) {
       alert('Web Audio API is not supported on your browser: ' + e);
     }
@@ -66,14 +66,11 @@ class Page extends React.Component {
 
   collectPlaybackQueueGarbage() {
     const { playbackQueue } = this.state;
-    if (playbackQueue.length === 0) {
-    }
-
-      while (this.playbackQueueHeadExpired()) this.playbackQueuePop();
+    while (this.playbackQueueHeadExpired()) this.playbackQueuePop();
   }
 
   timeoutHandler() {
-    const { playbackQueue, volume } = this.state;
+    const { playbackQueue, volume, isLoaded } = this.state;
 
     this.collectPlaybackQueueGarbage();
 
@@ -85,10 +82,17 @@ class Page extends React.Component {
     }
 
     let dataArray = new Float32Array(this.analyser.frequencyBinCount);
-    void this.analyser.getFloatTimeDomainData(dataArray); 
+    void this.analyser.getFloatTimeDomainData(dataArray);
     const newVolume = dataArray.reduce((sum, i) => sum + i) / dataArray.length;
 
     if (newVolume !== volume) {
+      this.canvas = document.getElementById('canvas');
+      let context = this.canvas.getContext('2d');
+
+      context.fillStyle = 'white';
+      context.fillRect(0, 0, 5000, 200);
+      context.fillStyle = '#00007E';
+      context.fillRect(0, 0, newVolume * 5000, 200);
       this.setState({ volume: newVolume, current });
     }
   }
@@ -115,24 +119,24 @@ class Page extends React.Component {
     return (
       <div className="content">
         {isLoaded ? (
-          <div className="drum-view">
-            <h1 className="title">Do you like... drums?</h1>
-            <p className="sample">{current}</p>
+          <div className="drums-widget">
+            <h1 className="drums-widget__title">Do you like... drums?</h1>
+            <p className="drums-widget__current-sample">{current}</p>
             <input
               id="#play"
               type="button"
-              className="play"
+              className="drums-widget__play-button"
               onClick={this.playDrumsEventHandler}
               disabled={playbackQueue.length > 0}
               value="PLAY"></input>
             <div className="samples-container">
               <ul id="#sample-name" className="samples"></ul>
             </div>
-            <div className={`volume ${vol > 0 ? 'volume-on' : ''}`}>{vol} (Volume)</div>
+            <canvas className="drums-widget__volume" id="canvas"></canvas>
           </div>
         ) : (
           <div className="loading-view">
-            <h1>LOADING</h1>
+            <h1 className="loading-view__title">LOADING</h1>
           </div>
         )}
       </div>

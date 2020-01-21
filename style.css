@@ -1,23 +1,32 @@
 body {
-  background-color: rgb(255, 153, 57);
-  color: rgba(255, 153, 57);
+  background-color: rgb(0, 123, 123);
   font-size: 14px;
   font-family: "Press Start 2P", cursive;
   margin: 0;
-}
-
-.content {
-  background-color: white;
-  height: 200px;
-  max-width: 1080px;
-  margin: 16px;
-  margin-top: 0;
+  display: block;
   position: relative;
 }
 
-.drum-view {
+.content {
+  background-color: #BfBfBf;
+  height: 200px;
+  max-width: 1080px;
+  margin: 16px;
+  position: relative;
+  margin-top: 120px;
+
+  border-style: solid;
+  border-width: 1px;
+  border-top-color: white;
+  border-left-color: white;
+  border-bottom-color: black;
+  border-right-color: black;
+  position: absolute;
   text-align: center;
-  height: 100%;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
 }
 
 .samples li {
@@ -32,8 +41,17 @@ body {
   background: yellow;
 }
 
-.title {
+.drums-widget__title {
   color: white;
+  background: linear-gradient(90deg, rgba(14, 38, 102, 1) 0%, rgba(255, 255, 255, 1) 100%);
+  text-align: left;
+  font-size: 14px;
+  height: 26px;
+  vertical-align: middle;
+  padding:6px 16px;
+  box-sizing: border-box;
+  margin: 0;
+  margin-bottom: 8px;
 }
 
 @keyframes loading {
@@ -45,58 +63,77 @@ body {
   to {
     width: 100%;
     font-size: 32px;
-    color: rgba(255, 153, 57);
+    color: #00007E;
   }
 }
 
 .loading-view {
   animation: 2s loading 0s infinite alternate;
-  background-color: rgb(255, 153, 57);
-  color: rgb(255, 153, 57);
+  background-color: #00007E;
+  color: #00007E;
 
   position: absolute;
   top: 0;
   bottom: 0;
   width: 100%;
-  margin: auto;
-  text-align: center;
   height: 22px;
 }
 
-.play {
-  padding: 8px 24px;
-  border-style: none;
-  background-color: rgb(0, 110, 255);
+.loading-view__title {
   color: white;
+  background: linear-gradient(90deg, rgba(14, 38, 102, 1) 0%, rgba(255, 255, 255, 1) 100%);
+  text-align: left;
+  font-size: 14px;
+  height: 26px;
+  vertical-align: middle;
+  padding:6px 16px;
+  box-sizing: border-box;
+  margin: 0;
+  margin-bottom: 8px;
+}
+
+.drums-widget__play-button {
+  padding: 8px 24px;
+  background-color: #BfBfBf;
+  color: rgb(52, 51, 49);
   font-family: "Press Start 2P", cursive;
+  border-style: solid;
+  border-width: 1px;
+  border-top-color: white;
+  border-left-color: white;
+  border-bottom-color: black;
+  border-right-color: black;
 }
 
-.play:disabled {
-  background-color: rgb(205, 211, 219);
+.drums-widget__play-button:disabled {
+  color: rgb(141, 140, 139);
 }
 
-.play:active {
+.drums-widget__play-button:active {
   background-color: red;
   color: white;
 }
 
-.volume-on {
+.drums-widget__volume {
   font-size: 16px;
-  color: red;
+  color: #a8a8a8;
+  border-width: 1px;
+  border-style: dotted;
+  width: 1000px;
+  height: 25px;
 }
 
-.sample {
+.drums-widget__current-sample {
   font-size: 32px;
-  position: fixed;
   left: -50%;
   right: -50%;
   top: 100px;
   height: 32px;
 }
 
-
 @media screen and (min-width: 1008px) {
   .content {
     margin: auto;
+    margin-top: 120px;
   }
 }
