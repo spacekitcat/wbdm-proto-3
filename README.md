@@ -37,3 +37,7 @@ All of this is required to keep CORS happy when it fetches the audio samples fro
 I suppose you could try using some browser extension that disables CORS, but I prefer to avoid that and comply with the CORS validation during development. At least it forces me to test it early.
 
 If you run it once, it should cache all the samples locally meaning `index.html` may well just run without CORS issues.
+
+# Deploy setup
+
+An AWS CodePipeline uses GitHub hooks to detect commits to this repository. When commits are detected, the source is deployed to an S3 bucket. The S3 bucket is wired up to a subdomain on spacekitcat.com

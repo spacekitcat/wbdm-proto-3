@@ -83,16 +83,16 @@ class Page extends React.Component {
 
     let dataArray = new Float32Array(this.analyser.frequencyBinCount);
     void this.analyser.getFloatTimeDomainData(dataArray);
-    const newVolume = dataArray.reduce((sum, i) => sum + i) / dataArray.length;
+    const newVolume = 8 * dataArray.reduce((sum, i) => sum + i) / dataArray.length;
 
     if (newVolume !== volume) {
       this.canvas = document.getElementById('canvas');
       let context = this.canvas.getContext('2d');
 
       context.fillStyle = 'white';
-      context.fillRect(0, 0, 5000, 200);
+      context.fillRect(0, 0, this.canvas.clientWidth, 200);
       context.fillStyle = '#00007E';
-      context.fillRect(0, 0, newVolume * 5000, 200);
+      context.fillRect(0, 0, newVolume * this.canvas.clientWidth, 200);
       this.setState({ volume: newVolume, current });
     }
   }

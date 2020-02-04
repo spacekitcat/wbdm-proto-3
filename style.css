@@ -119,8 +119,9 @@ body {
   color: #a8a8a8;
   border-width: 1px;
   border-style: dotted;
-  width: 1000px;
+  margin: auto;
   height: 25px;
+  width: 90%;
 }
 
 .drums-widget__current-sample {
