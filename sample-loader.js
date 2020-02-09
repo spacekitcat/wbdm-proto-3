@@ -13,7 +13,10 @@ const loadSamples = (audioContext, manifestJson) =>
   Promise.all(
     manifestJson.samples.map(async item => {
       let audioData = await fetchAndCacheSample(audioContext, item.file);
-      return { audioData: audioData, metaData: item };
+      return {
+        audioData: audioData,
+        metaData: item
+      };
     })
   );
 
@@ -26,8 +29,9 @@ const initSampleCache = audioContext => manifestJson => {
 };
 
 const selectRandomSample = () => {
-  let sampleIndex = Math.round((audioSampleDataCache.length - 1) * Math.random());
+  let sampleIndex = Math.round(
+    (audioSampleDataCache.length - 1) * Math.random()
+  );
 
   return audioSampleDataCache[sampleIndex];
-
-}
+};

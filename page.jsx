@@ -83,7 +83,8 @@ class Page extends React.Component {
 
     let dataArray = new Float32Array(this.analyser.frequencyBinCount);
     void this.analyser.getFloatTimeDomainData(dataArray);
-    const newVolume = 8 * dataArray.reduce((sum, i) => sum + i) / dataArray.length;
+    const newVolume =
+      (8 * dataArray.reduce((sum, i) => sum + i)) / dataArray.length;
 
     if (newVolume !== volume) {
       this.canvas = document.getElementById('canvas');
@@ -101,7 +102,7 @@ class Page extends React.Component {
     this.initWebAudio();
 
     fetchManifest()
-      .then(initSampleCache(this.audioContext))
+    .then(initSampleCache(this.audioContext))
       .then(() => {
         this.setState({ isLoaded: true });
       })
@@ -118,27 +119,34 @@ class Page extends React.Component {
 
     return (
       <div className="content">
-        {isLoaded ? (
-          <div className="drums-widget">
-            <h1 className="drums-widget__title">Do you like... drums?</h1>
-            <p className="drums-widget__current-sample">{current}</p>
-            <input
-              id="#play"
-              type="button"
-              className="drums-widget__play-button"
-              onClick={this.playDrumsEventHandler}
-              disabled={playbackQueue.length > 0}
-              value="PLAY"></input>
-            <div className="samples-container">
-              <ul id="#sample-name" className="samples"></ul>
+        <div className="drum-container">
+          {isLoaded ? (
+            <div className="drums-widget">
+              <h1 className="drums-widget__title">Do you like... drums?</h1>
+              <p className="drums-widget__current-sample">{current}</p>
+              <input
+                id="#play"
+                type="button"
+                className="drums-widget__play-button"
+                onClick={this.playDrumsEventHandler}
+                disabled={playbackQueue.length > 0}
+                value="PLAY"></input>
+              <div className="samples-container">
+                <ul id="#sample-name" className="samples"></ul>
+              </div>
+              <canvas className="drums-widget__volume" id="canvas"></canvas>
             </div>
-            <canvas className="drums-widget__volume" id="canvas"></canvas>
-          </div>
-        ) : (
-          <div className="loading-view">
-            <h1 className="loading-view__title">LOADING</h1>
-          </div>
-        )}
+          ) : (
+            <div className="loading-view">
+              <h1 className="loading-view__title">LOADING</h1>
+            </div>
+          )}
+        </div>
+        <a
+          className="github_link"
+          href="https://github.com/spacekitcat/wbdm-proto-3">
+          github
+        </a>
       </div>
     );
   }

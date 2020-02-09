@@ -92,6 +92,10 @@ body {
   margin-bottom: 8px;
 }
 
+.drum-container {
+  height: 350px;
+}
+
 .drums-widget__play-button {
   padding: 8px 24px;
   background-color: #BfBfBf;
@@ -137,4 +141,18 @@ body {
     margin: auto;
     margin-top: 120px;
   }
+}
+
+.github_link {
+  color: white;
+  text-decoration: none;
+}
+
+.github_link:visited {
+  color: rgb(141, 141, 141);
+}
+
+.github_link:active {
+  color: white;
+  text-decoration: underline;
 }
